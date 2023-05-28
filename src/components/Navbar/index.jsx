@@ -12,7 +12,7 @@ import img from "../../assets/imgs/freepik7.jpg";
 import { Button } from "../Generic";
 import { Dropdown, Popover } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
-
+import Footer from "../Footer";
 
 const registered = localStorage.token;
 
@@ -46,11 +46,10 @@ const items = lenguage.map(({ name, code, flag }) => {
 });
 
 const Navbar = () => {
-
   const navigate = useNavigate();
 
   return (
-    <>
+    <div >
       <Wrapper className="nocopy">
         <WrapperLogo onClick={() => navigate("/")}>
           <Img src={img}></Img>
@@ -90,7 +89,12 @@ const Navbar = () => {
                   <PopoverBody onClick={() => navigate("profile")}>
                     <Logo.Setting /> Profile
                   </PopoverBody>
-                  <PopoverBody onClick={() => delete localStorage.token}>
+                  <PopoverBody
+                    onClick={() => {
+                      delete localStorage.token;
+                      navigate('/')
+                    }}
+                  >
                     <Logo.Logout /> Log Out
                   </PopoverBody>
                 </div>
@@ -113,7 +117,8 @@ const Navbar = () => {
         </WrapperButton>
       </Wrapper>
       <Outlet />
-    </>
+      {/* <Footer/> */}
+    </div>
   );
 };
 

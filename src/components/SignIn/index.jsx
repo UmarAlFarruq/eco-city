@@ -19,14 +19,22 @@ const SignIn = () => {
         <Title mt={"44px"}> Login</Title>
         <Inputt mt={"6px"} placeholder="Login" />
         <Title mt={"34px"}> Password</Title>
-        <Inputt  placeholder="Password" />
+        <Inputt placeholder="Password" />
         <WrapperForgot>
           <Forgot>Forgot</Forgot>
           <Forgot color="#46a358" onClick={() => navigate("/signup")}>
             Sign up
           </Forgot>
         </WrapperForgot>
-        <Button mt="28" type="primary" width="100%" onClick={() => navigate("/home")}  >
+        <Button
+          mt="28"
+          type="primary"
+          width="100%"
+          onClick={() => {
+            navigate("/home");
+            localStorage.token = "tets";
+          }}
+        >
           Login
         </Button>
       </Container>

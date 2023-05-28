@@ -1,12 +1,25 @@
-import { Wrapper } from "./style";
-
-
+// import { Wrapper } from "./style";
+import "./style.css";
 const Loading = () => {
-    return ( 
-        <Wrapper>
-            <h3>Loading...</h3>
-        </Wrapper>
-     );
-}
- 
+  return (
+    <div className="container">
+      <div className="lds-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <h3>Loading...</h3>
+    </div>
+  );
+};
+
 export default Loading;
