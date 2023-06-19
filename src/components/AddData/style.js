@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import {ReactComponent as send} from '../../assets/icons/send-svgrepo-com.svg'
+
 
 const Container = styled.div`
     display: flex;
@@ -32,6 +34,7 @@ const WrapperCard = styled.div`
     box-shadow: 0px 10px 30px rgba(13, 38, 59, 0.05);
     border-radius: 3px;
     padding: 34px 40px;
+    width: 920px;
     
     margin-top: 32px;
     display: flex;
@@ -64,5 +67,39 @@ export const UploadButton = styled.div`
     gap: 8px;
 `
 
-export { Container, Title, WrapperCard, Img };
+const Input = styled.input`
+    width: 100%;
+    height: 44px;
+    background: none;
+    border: 2px solid whitesmoke;
+    border-radius: 8px;
+    padding: 0px 15px;
+    :active{
+        list-style: none;
+    }
+    :focus{
+        outline: none;
+    }
+`
+const TextArea = styled.textarea`
+    width: 100%;
+    height: 104px;
+    background: none;
+    border: 2px solid whitesmoke;
+    border-radius: 8px;
+    padding: 0px 15px;
+    :active{
+        list-style: none;
+    }
+    :focus{
+        outline: none;
+    }
+`
+
+export const Icon = styled(send)`
+    width: 22px;
+    height: 22px;
+`
+
+export { Container,TextArea, Title, WrapperCard, Img,Input };
 

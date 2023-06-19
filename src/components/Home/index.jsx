@@ -3,6 +3,7 @@ import {
   CardImg,
   DateCard,
   Description,
+  Div,
   H2,
   Header,
   Img,
@@ -19,73 +20,48 @@ import imgcard3 from "../../assets/imgs/photo_phone3.jpg";
 import { Button } from "../Generic";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+export const data = [
+  { id: 1, img: imgcard,location:"Toshkent Yunusobod ",  date: "16:19 / 27.03.2023", text: "Lorem ipsum," },
+  { id: 1, img: imgcard1,location:"Toshkent Yunusobod ",  date: "16:19 / 27.03.2023", text: "Lorem ipsum," },
+  { id: 1, img: imgcard2,location:"Toshkent Yunusobod ",  date: "16:19 / 27.03.2023", text: "Lorem ipsum," },
+  { id: 1, img: imgcard3,location:"Toshkent Yunusobod ",  date: "16:19 / 27.03.2023", text: "Lorem ipsum," },
+  { id: 1, img: imgcard,location:"Toshkent Yunusobod ",  date: "16:19 / 27.03.2023", text: "Lorem ipsum," },
+  { id: 1, img: imgcard,location:"Toshkent Yunusobod ",  date: "16:19 / 27.03.2023", text: "Lorem ipsum," },
+];
 
-  const navigate = useNavigate()
+const Home = () => {
+  const navigate = useNavigate();
 
   return (
     <Wrapper>
       <Header className="nocopy">
         <Img src={img}></Img>
-        <div>
+        <Div>
           <H2>Shaxar obod bo'lishda o'z hissangizni qo'shing</H2>
           <P>
             Shaxringizdagi ko'zga ko'ringan muammolarni rasmga oling,
             locatsionni belgilab bizga yuboring
           </P>
-          <Button onClick={()=>navigate('/add') }  type="primary">
+          <Button onClick={() => navigate("/add")} type="primary">
             Rasimga oling va jo'nating
           </Button>
-        </div>
+        </Div>
       </Header>
       <Main>
-        <Card>
-          <CardImg src={imgcard3}></CardImg>
-          <DateCard>
-            <FieldTimeOutlined style={{ fontSize: "16px", color: "#8F8F8F" }} />
-            16:19 / 27.03.2023
-          </DateCard>
-          <Description>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem sint
-            dicta veniam cupiditate aspernatur earum inventore dolore accusamus
-            vitae cumque!
-          </Description>
-        </Card>
-        <Card>
-          <CardImg src={imgcard2}></CardImg>
-          <DateCard>
-            <FieldTimeOutlined style={{ fontSize: "16px", color: "#8F8F8F" }} />
-            16:19 / 27.03.2023
-          </DateCard>
-          <Description>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque
-            maiores dignissimos dolor praesentium error est aspernatur rerum
-            officia, necessitatibus, nostrum voluptates vel. Amet explicabo
-            asperiores dolorem odio
-          </Description>
-        </Card>
-        <Card>
-          <CardImg src={imgcard1}></CardImg>
-          <DateCard>
-            <FieldTimeOutlined style={{ fontSize: "16px", color: "#8F8F8F" }} />
-            16:19 / 27.03.2023
-          </DateCard>
-          <Description>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta
-            perferendis voluptatum nihil explicabo reiciendis quod voluptates
-            excepturi.
-          </Description>
-        </Card>
-        <Card>
-          <CardImg src={imgcard}></CardImg>
-          <DateCard>
-            <FieldTimeOutlined style={{ fontSize: "16px", color: "#8F8F8F" }} />
-            16:19 / 27.03.2023
-          </DateCard>
-          <Description>
-            Lorem ipsum, consectetur, at fugiat nemo neque facilis.
-          </Description>
-        </Card>
+        {data.map(({ id, text, date, img }) => {
+          return(
+          <Card key={id} onClick={() => navigate(`${id}`)}>
+            <CardImg src={img}></CardImg>
+            <DateCard>
+              <FieldTimeOutlined
+                style={{ fontSize: "16px", color: "#8F8F8F" }}
+              />
+              {date}
+            </DateCard>
+            <Description>{text}</Description>
+          </Card>
+          )
+        })}
       </Main>
     </Wrapper>
   );

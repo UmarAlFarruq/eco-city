@@ -1,114 +1,124 @@
-import { Form, Select, Modal, Upload, Input, DatePicker } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "../../components/Generic";
-import { Container, Title, WrapperCard, Wrapper, UploadButton } from "./style";
+import {
+  Container,
+  Title,
+  TextArea,
+  WrapperCard,
+  Wrapper,
+  Input,
+  Icon,
+} from "./style";
+// import { useParams } from "react-router-dom";
 import { useState } from "react";
-
-const { TextArea } = Input;
-
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
+import "./style.css";
+const AddData = () => {
+  // const { id } = useParams();
+  const [formData, setFormData] = useState({
+    img: "",
+    text: "",
+    location: "",
+    date: "",
+    id:''
   });
 
-// const handleChange = (value) => {
-//   console.log(`selected ${value}`);
-// };
+  const localData = localStorage.getItem("profileData") ? JSON.parse(localStorage.getItem("profileData")) : [];
 
-const AddData = () => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([]);
-  // const handleCancel = () => setPreviewOpen(false);
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+  const handleInputChange = (event) => {
+    if (event.target.name === "img") {
+      const fn = new FileReader();
+      fn.readAsDataURL(event.target.files[0]);
+      fn.addEventListener("load", () => {
+        let url = fn.result;
+        setFormData({
+          ...formData,
+          img: url,
+        });
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.value,
+        id:new Date()
+      });
     }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
   };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-  const uploadButton = (
-    <UploadButton>
-      <PlusOutlined />
-      Upload
-    </UploadButton>
-  );
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // setSendData(...sendData, formData)
+    localStorage.setItem("profileData", JSON.stringify([...localData, formData]));
+   
+    setFormData({
+      img: null,
+      text: "",
+      location: "",
+      date: "",
+    });
+  };
 
   return (
     <Wrapper>
       <Container>
-        <Form>
+        <form onSubmit={handleSubmit}>
           <Title.Title size={28} mt={34}>
             Sharingizdagi muammoni rasimga oling va tashlang
           </Title.Title>
           <Wrapper>
             <WrapperCard>
-              <Input width="800px" placeholder="Manzil" />
-              <DatePicker style={{ width: "800px" }} picker="" />
-              <Select
-                placeholder="Category"
-                // defaultValue="default"
-                // 
-                style={{
-                  width: 800,
-                }}
-                // onChange={handleChange}
-                options={[
-                  {
-                    value: "jack",
-                    label: "Jack",
-                  },
-                  {
-                    value: "lucy",
-                    label: "Lucy",
-                  },
-                  {
-                    value: "Yiminghe",
-                    label: "yiminghe",
-                  },
-                  {
-                    value: "disabled",
-                    label: "Disabled",
-                    disabled: true,
-                  },
-                ]}
+              <Input
+                name="location"
+                placeholder="Manzil"
+                value={formData.location}
+                onChange={handleInputChange}
               />
-              <>
-                <Upload
-                  // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  listType="picture-card"
-                  fileList={fileList}
-                  onPreview={handlePreview}
-                  onChange={handleChange}
-                >
-                  {fileList.length >= 6 ? null : uploadButton}
-                </Upload>
-                <Modal
-                  open={previewOpen}
-                  title={previewTitle}
-                  footer={null}
-                  onCancel={() => setPreviewOpen(false)}
-                >
-                  <img
-                    alt="example"
-                    style={{
-                      width: "100%",
-                    }}
-                    src={previewImage}
-                  />
-                </Modal>
-              </>
+              <Input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleInputChange}
+                picker=""
+              />
 
-              <TextArea width="800px" placeholder="Description" />
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <TextArea
+                name="text"
+                value={formData.text}
+                onChange={handleInputChange}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "start",
+                  width: "100%",
+                  maxHeight: "200px",
+                }}
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="img"
+                  onChange={handleInputChange}
+                  id="file"
+                  className="inputfile"
+                />
+                <label className="label" htmlFor="file">
+                  <Icon />
+                  <p> Rasimni yuklash</p>
+                </label>
+                {formData.img && (
+                  <img
+                    src={formData.img}
+                    alt="Yuklangan rasm"
+                    style={{ width: "200px" }}
+                  />
+                )}
+              </div>
+              <div
+                style={{
+                  gap: "20px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
                 <Button
                   htmlType="submit"
                   type={"primary"}
@@ -121,7 +131,7 @@ const AddData = () => {
               </div>
             </WrapperCard>
           </Wrapper>
-        </Form>
+        </form>
       </Container>
     </Wrapper>
   );

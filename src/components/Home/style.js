@@ -101,3 +101,10 @@ export const Description = styled.div`
   overflow: hidden;
   /* font-family:Fida Code; */
 `
+
+export const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+`

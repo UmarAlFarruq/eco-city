@@ -20,6 +20,8 @@ const confirm = () => {
 
 const Sample = () => {
   const navigate = useNavigate();
+  const localData = localStorage.getItem("profileData");
+  let data = localData ? JSON.parse(localData) : [];
   return (
     <Wrapper>
       <h2>User Name</h2>
@@ -30,54 +32,34 @@ const Sample = () => {
             new Data
           </Button>
         </CardHeader>
-        <Card>
-          <Img src={noImg}></Img>
-          <Data>
-            <Description>
-              Lorem ipsum dolor sit amet Quidem ducimus ab amet!
-            </Description>
-            <p>15.05.2023</p>
-          </Data>
-          <Action>
-            <Icon.Edit></Icon.Edit>
-            <Popconfirm
-              placement="leftBottom"
-              title="Delete ?"
-              description={"rostan o'chirasizmi ?"}
-              onConfirm={confirm}
-              okText="Yes"
-              cancelText="No"
-            >
-              <button style={{ background: "none", border: "none" }}>
-                <Icon.Delete></Icon.Delete>
-              </button>
-            </Popconfirm>
-          </Action>
-        </Card>
-        <Card>
-          <Img src={noImg}></Img>
-          <Data>
-            <Description>
-              Lorem ipsum dolor sit amet Quidem ducimus ab amet!
-            </Description>
-            <p>15.05.2023</p>
-          </Data>
-          <Action>
-            <Icon.Edit></Icon.Edit>
-            <Popconfirm
-              placement="leftBottom"
-              title="Delete ?"
-              description={"rostan o'chirasizmi ?"}
-              onConfirm={confirm}
-              okText="Yes"
-              cancelText="No"
-            >
-              <button style={{ background: "none", border: "none" }}>
-                <Icon.Delete></Icon.Delete>
-              </button>
-            </Popconfirm>
-          </Action>
-        </Card>
+        {data?.map(({ id, img, text, date, location }) => {
+          return (
+            <Card key={id}>
+              <Img src={img ? img : noImg}></Img>
+              <Data>
+                <Description>
+                 {text}
+                </Description>
+                <p>{date}</p>
+              </Data>
+              <Action>
+                <Icon.Edit></Icon.Edit>
+                <Popconfirm
+                  placement="leftBottom"
+                  title="Delete ?"
+                  description={"rostan o'chirasizmi ?"}
+                  onConfirm={confirm}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <button style={{ background: "none", border: "none" }}>
+                    <Icon.Delete></Icon.Delete>
+                  </button>
+                </Popconfirm>
+              </Action>
+            </Card>
+          );
+        })}
       </WrapperCard>
     </Wrapper>
   );
