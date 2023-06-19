@@ -19,6 +19,7 @@ import imgcard2 from "../../assets/imgs/photo_phone1.jpg";
 import imgcard3 from "../../assets/imgs/photo_phone3.jpg";
 import { Button } from "../Generic";
 import { useNavigate } from "react-router-dom";
+import ApexChart from "../Chart";
 
 export const data = [
   { id: 1, img: imgcard,location:"Toshkent Yunusobod ",  date: "16:19 / 27.03.2023", text: "Lorem ipsum," },
@@ -48,9 +49,9 @@ const Home = () => {
         </Div>
       </Header>
       <Main>
-        {data.map(({ id, text, date, img }) => {
+        {data.map(({ id, text, date, img }, index) => {
           return(
-          <Card key={id} onClick={() => navigate(`${id}`)}>
+          <Card key={index} onClick={() => navigate(`${id}`)}>
             <CardImg src={img}></CardImg>
             <DateCard>
               <FieldTimeOutlined
@@ -63,6 +64,7 @@ const Home = () => {
           )
         })}
       </Main>
+      <ApexChart/>
     </Wrapper>
   );
 };

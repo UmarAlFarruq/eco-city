@@ -12,50 +12,49 @@ import {
 import { Button } from "../Generic";
 import noImg from "../../assets/imgs/noImg.png";
 import { useNavigate } from "react-router-dom";
-import { Popconfirm, message } from "antd";
+import { message } from "antd";
+import { useState } from "react";
 
-const confirm = () => {
-  message.success("Clicked on Yes.");
-};
+
 
 const Sample = () => {
   const navigate = useNavigate();
   const localData = localStorage.getItem("profileData");
-  let data = localData ? JSON.parse(localData) : [];
+  const [data] = useState(localData ? JSON.parse(localData) : []);
+  function onDelete(id) {
+    message.success("Data deleted");
+    localStorage.setItem(
+      "profileData",
+      JSON.stringify(data.filter((item) => item.id !== id))
+    );
+    window.location.reload();
+  }
+
   return (
     <Wrapper>
       <h2>User Name</h2>
       <WrapperCard>
         <CardHeader>
-          <h2>Sizning murojatlaringiz: 2</h2>
+          <h2>Sizning murojatlaringiz: {data.length} </h2>
           <Button type="primary" width="180px" onClick={() => navigate("/add")}>
             new Data
           </Button>
         </CardHeader>
-        {data?.map(({ id, img, text, date, location }) => {
+        {data?.map(({ id, img, text, date }) => {
           return (
             <Card key={id}>
               <Img src={img ? img : noImg}></Img>
               <Data>
-                <Description>
-                 {text}
-                </Description>
+                <Description>{text}</Description>
                 <p>{date}</p>
               </Data>
               <Action>
-                <Icon.Edit></Icon.Edit>
-                <Popconfirm
-                  placement="leftBottom"
-                  title="Delete ?"
-                  description={"rostan o'chirasizmi ?"}
-                  onConfirm={confirm}
-                  okText="Yes"
-                  cancelText="No"
+                <button
+                  onClick={() => onDelete(id)}
+                  style={{ background: "none", border: "none" }}
                 >
-                  <button style={{ background: "none", border: "none" }}>
-                    <Icon.Delete></Icon.Delete>
-                  </button>
-                </Popconfirm>
+                  <Icon.Delete></Icon.Delete>
+                </button>
               </Action>
             </Card>
           );

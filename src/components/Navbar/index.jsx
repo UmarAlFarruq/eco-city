@@ -12,7 +12,6 @@ import img from "../../assets/imgs/freepik7.jpg";
 import { Button } from "../Generic";
 import { Dropdown, Popover } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
-import Footer from "../Footer";
 
 const registered = localStorage.token;
 
@@ -75,7 +74,7 @@ const Navbar = () => {
             </Button>
           </Dropdown>
 
-          {localStorage.token ? (
+          {localStorage.auth ? (
             <Popover
               style={{ padding: 0 }}
               placement="bottomRight"
@@ -91,7 +90,7 @@ const Navbar = () => {
                   </PopoverBody>
                   <PopoverBody
                     onClick={() => {
-                      delete localStorage.token;
+                      delete localStorage.auth;
                       navigate('/')
                     }}
                   >
