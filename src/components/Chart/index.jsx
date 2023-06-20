@@ -25,7 +25,7 @@ class ApexChart extends React.Component {
           width: [0, 4]
         },
         title: {
-          text: 'Mrojatlar diogrammasi'
+          text: 'Murojatlar diogrammasi'
         },
         dataLabels: {
           enabled: true,

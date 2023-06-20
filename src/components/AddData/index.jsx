@@ -8,11 +8,11 @@ import {
   Input,
   Icon,
 } from "./style";
-// import { useParams } from "react-router-dom";
 import { useState } from "react";
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 const AddData = () => {
-  // const { id } = useParams();
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     img: "",
     text: "",
@@ -45,9 +45,9 @@ const AddData = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // setSendData(...sendData, formData)
+    
     localStorage.setItem("profileData", JSON.stringify([...localData, formData]));
-   
+    navigate('/profile')
     setFormData({
       img: null,
       text: "",

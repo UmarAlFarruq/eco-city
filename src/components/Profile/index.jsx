@@ -15,7 +15,10 @@ import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { useState } from "react";
 
-
+const localData = localStorage.auth ? JSON.parse(localStorage.auth) : null;
+let userName = localData
+  ? (localData[0]?.firstName + " " + localData[0]?.lastName)
+  : null;
 
 const Sample = () => {
   const navigate = useNavigate();
@@ -32,12 +35,12 @@ const Sample = () => {
 
   return (
     <Wrapper>
-      <h2>User Name</h2>
+      <h2 style={{padding:"15px 0"}} >{userName || "User Name" }</h2>
       <WrapperCard>
         <CardHeader>
           <h2>Sizning murojatlaringiz: {data.length} </h2>
-          <Button type="primary" width="180px" onClick={() => navigate("/add")}>
-            new Data
+          <Button type="primary" width="180px" onClick={() =>localStorage.auth? navigate("/add"): navigate('/signup')}>
+            Xabar qo'shish
           </Button>
         </CardHeader>
         {data?.map(({ id, img, text, date }) => {
